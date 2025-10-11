@@ -1,0 +1,17 @@
+{
+    "configurations": [
+        {
+            "name": "AVR",
+            "includePath": [
+                "/usr/local/Cellar/avr-gcc/*/lib/gcc/avr/include",
+                "/usr/local/Cellar/avr-libc/*/avr/include"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/local/bin/avr-gcc",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "gcc-x64"
+        }
+    ],
+    "version": 4
+}

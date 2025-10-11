@@ -1,0 +1,9 @@
+{
+  "files.associations": {
+    "*.html": "html",
+    "*.ftl": "html",
+    "*.tf": "hcl",
+    "*.ld": "riscv",
+    "uart.h": "c"
+  }
+}
