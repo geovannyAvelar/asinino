@@ -5,27 +5,72 @@ void meminit(void)
 {
   uart_print("Initializing memory...\r\n");
 
-  for (unsigned int *i = (unsigned int *)_PHYS_MEM_START; i < (unsigned int *)_PHYS_MEM_END; i++)
+  void *page_table_start = (void *)_PAGE_TABLE_START;
+  unsigned int count = 1;
+  for (page_table_start; page_table_start < (void *)_PAGE_TABLE_END; page_table_start += sizeof(struct pte))
   {
-    mem.next = (struct mem_block *)i;
-    mem = *mem.next;
+    struct pte *entry = (struct pte *)page_table_start;
+    entry->used = 0;
+    entry->addr = (void *)(_PAGE_TABLE_END + 1) + (count * _PAGE_SIZE);
+    count++;
   }
 }
 
-void *bmalloc(void)
+void *get_page(void)
 {
-  if (mem.next == 0)
+  void *page_table_start = (void *)_PAGE_TABLE_START;
+  for (page_table_start; page_table_start < (void *)_PAGE_TABLE_END; page_table_start += sizeof(struct pte))
   {
-    return 0;
+    struct pte *entry = (struct pte *)page_table_start;
+
+    if (entry->used == 0)
+    {
+      entry->used = 1;
+      return entry->addr;
+    }
   }
-  struct mem_block *allocated_block = &mem;
-  mem = *mem.next;
-  return (void *)allocated_block;
+
+  return 0;
 }
 
-void bfree(void *ptr)
+void free_page(void *ptr)
 {
-  struct mem_block *block = (struct mem_block *)ptr;
-  block->next = mem.next;
-  mem.next = block;
+  void *page_table_start = (void *)_PAGE_TABLE_START;
+  for (page_table_start; page_table_start < (void *)_PAGE_TABLE_END; page_table_start += sizeof(struct pte))
+  {
+    struct pte *entry = (struct pte *)page_table_start;
+    if (entry->addr == ptr)
+    {
+      for (void *byte = (void *)entry->addr; byte < (void *)(entry->addr + _PAGE_SIZE); byte++)
+      {
+        *(char *)byte = 0;
+      }
+      entry->used = 0;
+      return;
+    }
+  }
+}
+
+void dump_page(void *addr)
+{
+  for (void *byte = addr; byte < (void *)(addr + _PAGE_SIZE); byte++)
+  {
+    uart_print_hex(*(unsigned char *)byte);
+    uart_print(" ");
+  }
+  uart_print("\r\n");
+}
+
+void dump_page_table(void)
+{
+  uart_print("Page Table Dump:\r\n");
+  for (void *page_table_start = (void *)_PAGE_TABLE_START; page_table_start < (void *)_PAGE_TABLE_END; page_table_start += sizeof(struct pte))
+  {
+    struct pte *entry = (struct pte *)page_table_start;
+    uart_print("Page at: ");
+    uart_print_hex((unsigned int)entry->addr);
+    uart_print(" - Used: ");
+    uart_print_int(entry->used);
+    uart_print("\r\n");
+  }
 }

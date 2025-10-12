@@ -4,6 +4,7 @@
     "*.ftl": "html",
     "*.tf": "hcl",
     "*.ld": "riscv",
-    "uart.h": "c"
+    "uart.h": "c",
+    "mem.h": "c"
   }
 }
