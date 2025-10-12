@@ -39,6 +39,17 @@ char * uart_read_line(void) {
 
   while (1) {
     c = uart_receive();
+
+    if (c == 27) {
+      if (uart_receive() == '[') {
+        char arrow = uart_receive();
+        if (arrow == 'A') {
+          continue;;
+        }
+      }
+      continue;
+    }
+
     if (c == '\r' || c == '\n') {
       *ptr = '\0';
       uart_print("\r\n");
@@ -53,5 +64,6 @@ char * uart_read_line(void) {
       uart_transmit(c);
     }
   }
+
   return buffer;
 }
