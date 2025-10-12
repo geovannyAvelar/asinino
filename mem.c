@@ -63,14 +63,21 @@ void dump_page(void *addr)
 
 void dump_page_table(void)
 {
-  uart_print("Page Table Dump:\r\n");
+  uart_print("PAGE TABLE DUMP\r\n");
+
+  uart_print("Page  Start     End      Used\r\n");
+
+  unsigned int c = 0;
   for (void *page_table_start = (void *)_PAGE_TABLE_START; page_table_start < (void *)_PAGE_TABLE_END; page_table_start += sizeof(struct pte))
   {
     struct pte *entry = (struct pte *)page_table_start;
-    uart_print("Page at: ");
+    uart_print_int(c++);
+    uart_print("     ");
     uart_print_hex((unsigned int)entry->addr);
-    uart_print(" - Used: ");
-    uart_print_int(entry->used);
+    uart_print("    ");
+    uart_print_hex((unsigned int)entry->addr + _PAGE_SIZE - 1);
+    uart_print("   ");
+    uart_print(entry->used ? "Yes" : "No");
     uart_print("\r\n");
   }
 }
