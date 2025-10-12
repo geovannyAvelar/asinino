@@ -1,3 +1,6 @@
+#ifndef TYPES_H
+#define TYPES_H
+
 #define NULL ((void*)0)
 #define true 1
 #define false 0
@@ -11,3 +14,5 @@ typedef unsigned int uint32_t;
 typedef signed long int int64_t;
 typedef unsigned long int uint64_t;
 typedef unsigned long size_t;
+
+#endif // TYPES_H
