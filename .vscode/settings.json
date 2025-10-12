@@ -5,6 +5,8 @@
     "*.tf": "hcl",
     "*.ld": "riscv",
     "uart.h": "c",
-    "mem.h": "c"
+    "mem.h": "c",
+    "string.h": "c",
+    "types.h": "c"
   }
 }

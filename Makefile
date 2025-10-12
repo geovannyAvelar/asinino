@@ -10,7 +10,7 @@ CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os
 LDFLAGS = -mmcu=$(MCU)
 
 TARGET = main
-SRC = mem.c uart.c console.c mcu.c main.c
+SRC = asi_string.c mem.c uart.c console.c mcu.c main.c
 
 all: $(TARGET).hex
 

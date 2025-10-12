@@ -1,5 +1,5 @@
 #include "console.h"
-#include "string.h"
+#include "asi_string.h"
 #include "mem.h"
 #include "mcu.h"
 
@@ -10,8 +10,13 @@ void console_init(void)
   while (1)
   {
     uart_print("> ");
-    char *command = (char *) get_page();
-    uart_read_line(command, 128);
+    char *input = (char *)get_page();
+    uart_read_line(input, 128);
+
+    char *args[7];
+    uint8_t count = parse_command_args(input, args);
+
+    char *command = args[0];
 
     if (strcmp(command, "clear") == 0)
     {
@@ -29,8 +34,27 @@ void console_init(void)
       dump_page_table();
     }
 
-    free_page(command);
+    free_page(args);
+    free_page(input);
 
     uart_print("\r\n");
   }
+}
+
+uint8_t parse_command_args(char *input, char *args[7])
+{
+  uint8_t count = 0;
+  for (int i = 0; i < 7; i++)
+  {
+    strsplit(input, ' ', i, args[i]);
+
+    if (args[i][0] == '\0')
+    {
+      break;
+    }
+
+    count++;
+  }
+
+  return count;
 }
