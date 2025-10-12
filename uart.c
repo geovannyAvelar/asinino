@@ -1,4 +1,5 @@
 #include "uart.h"
+#include "mem.h"
 #include <avr/io.h>
 #include <util/delay.h>
 
@@ -78,8 +79,7 @@ unsigned char uart_receive(void)
   return UDR0;
 }
 
-char * uart_read_line(void) {
-  static char buffer[128];
+void uart_read_line(char *buffer, unsigned int size) {
   char *ptr = buffer;
   char c;
 
@@ -105,11 +105,9 @@ char * uart_read_line(void) {
         ptr--;
         uart_print("\b \b"); 
       }
-    } else if (ptr - buffer < sizeof(buffer) - 1) {
+    } else if (ptr - buffer < 128 - 1) {
       *ptr++ = c;
       uart_transmit(c);
     }
   }
-
-  return buffer;
 }

@@ -10,7 +10,8 @@ void console_init(void)
   while (1)
   {
     uart_print("> ");
-    char *command = uart_read_line();
+    char *command = (char *) get_page();
+    uart_read_line(command, 128);
 
     if (strcmp(command, "clear") == 0)
     {
@@ -27,6 +28,8 @@ void console_init(void)
     {
       dump_page_table();
     }
+
+    free_page(command);
 
     uart_print("\r\n");
   }

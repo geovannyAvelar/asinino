@@ -8,4 +8,4 @@ void uart_print(const char *str);
 void uart_print_hex(unsigned int num);
 void uart_print_int(int num);
 unsigned char uart_receive(void);
-char * uart_read_line(void);
+void uart_read_line(char *buffer, unsigned int size);
