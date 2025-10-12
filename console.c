@@ -11,7 +11,7 @@ void console_init(void)
     char *command = uart_read_line();
 
     if (strcmp(command, "restart") == 0) {
-      uart_print("Restarting...\r\n");
+      uart_print("Restarting...\r\n\n\n");
       mcu_restart();
     }
 
