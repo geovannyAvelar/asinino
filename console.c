@@ -10,6 +10,10 @@ void console_init(void)
     uart_print("> ");
     char *command = uart_read_line();
 
+    if (strcmp(command, "clear") == 0) {
+      uart_print(CLEAR_CONSOLE);
+    }
+
     if (strcmp(command, "restart") == 0) {
       uart_print("Restarting...\r\n\n\n");
       mcu_restart();
