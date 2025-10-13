@@ -2,6 +2,8 @@
 #include "asi_string.h"
 #include "mem.h"
 #include "mcu.h"
+#include "uart.h"
+#include "ds3231.h"
 
 void console_init(void)
 {
@@ -13,7 +15,7 @@ void console_init(void)
     char *input = (char *)get_page();
     uart_read_line(input, 128);
 
-    char *args[7];
+    char *args[16];
     uint8_t count = parse_command_args(input, args);
 
     char *command = args[0];
@@ -32,6 +34,14 @@ void console_init(void)
     if (strcmp(command, "dumppt") == 0)
     {
       dump_page_table();
+    }
+
+    if (strcmp(command, "date") == 0)
+    {
+      ds3231_time_t* current_time = (ds3231_time_t*)get_page();
+      ds3231_read_time(current_time);
+      ds3231_print_time(current_time);
+      free_page(current_time);
     }
 
     free_page(args);

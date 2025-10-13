@@ -1,5 +1,6 @@
 #include "mem.h"
 #include "uart.h"
+#include "ds3231.h"
 #include "console.h"
 #include "spi.h"
 #include "networking/networking.h"
@@ -14,6 +15,7 @@ int main(void)
   meminit();
   spi_init();
   networking_init();
+  ds3231_init();
 
   uart_print("System initialized.\r\n");
 
