@@ -34,6 +34,25 @@ void console_init(void)
       mcu_restart();
     }
 
+    if (strcmp(command, "echo") == 0)
+    {
+      if (count < 2)
+      {
+        uart_print("Usage: echo <message>");
+      }
+      else
+      {
+        for (int i = 1; i < count; i++)
+        {
+          uart_print(args[i]);
+          if (i < count - 1)
+          {
+            uart_print(" ");
+          }
+        }
+      }
+    }
+
     if (strcmp(command, "dumppt") == 0)
     {
       dump_page_table();
