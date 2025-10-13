@@ -5,6 +5,7 @@
 #include "console.h"
 #include "spi.h"
 #include "networking/networking.h"
+#include "fs/diskio.h"
 
 void banner(void);
 
@@ -16,6 +17,11 @@ int main(void)
   banner();
 
   meminit();
+
+  if (disk_initialize(0) != RES_OK)
+  {
+    error("Disk initialization failed");
+  }
 
   spi_init();
   networking_init();
@@ -38,7 +44,7 @@ void banner(void)
       "      ___________________\\/  \\      /\r\n"
       "     //                //     |____|\r\n"
       "    //                ||     /      \\\r\n"
-      "   //|                \\|     \\ 0  0 / Asinino v0.0.1! \r\n"
+      "   //|                \\|     \\ 0  0 / Asinino v0.0.1!\r\n"
       "  // \\       )         V    / \\____/\r\n"
       " //   \\     /        (     /\r\n"
       "\"\"     \\   /_________|  |_/\r\n"

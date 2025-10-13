@@ -6,11 +6,26 @@ PORT = /dev/ttyACM0
 CC = avr-gcc
 OBJCOPY = avr-objcopy
 
-CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os
-LDFLAGS = -mmcu=$(MCU)
+CFLAGS = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -fdata-sections -ffunction-sections
+LDFLAGS = -Wl,-gc-sections -Wl,-relax -mmcu=$(MCU)
 
 TARGET = main
-SRC = asi_string.c mem.c uart.c log.c ds3231.c console.c mcu.c spi.c networking/w5100.c networking/networking.c main.c
+SRC = \
+	asi_string.c \
+	mem.c \
+	uart.c \
+	log.c \
+	ds3231.c \
+	fs/ff.c \
+	fs/ffsystem.c \
+	fs/ffunicode.c \
+	fs/diskio.c \
+	console.c \
+	mcu.c \
+	spi.c \
+	networking/w5100.c \
+	networking/networking.c \
+	main.c
 
 all: $(TARGET).hex
 
