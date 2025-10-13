@@ -59,6 +59,10 @@ void uart_print_int(int num)
     num /= 10;
   } while (num > 0);
 
+  if (i == 1) {
+    buffer[i++] = '0'; // Add leading zero for single digit
+  }
+
   if (is_negative)
   {
     buffer[i++] = '-';

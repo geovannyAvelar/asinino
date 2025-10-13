@@ -75,7 +75,7 @@ void dump_page_table(void)
   {
     struct pte *entry = (struct pte *)page_table_start;
     uart_print_int(c++);
-    uart_print("     ");
+    uart_print("    ");
     uart_print_hex((unsigned int)entry->addr);
     uart_print("    ");
     uart_print_hex((unsigned int)entry->addr + _PAGE_SIZE - 1);
