@@ -37,10 +37,8 @@ void uart_print_hex(unsigned int num)
 
 void uart_print_hex_f(unsigned int num) {
   const char hex_chars[] = "0123456789ABCDEF";
-  for (int i = (sizeof(num) * 2) - 1; i >= 0; i--)
-  {
-    uart_transmit(hex_chars[(num >> (i * 4)) & 0x0F]);
-  }
+  uart_transmit(hex_chars[(num >> 4) & 0x0F]);
+  uart_transmit(hex_chars[num & 0x0F]);
 }
 
 void uart_print_int(int num)
