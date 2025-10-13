@@ -8,6 +8,7 @@
     "mem.h": "c",
     "string.h": "c",
     "types.h": "c",
-    "console.h": "c"
+    "console.h": "c",
+    "w5100.h": "c"
   }
 }
