@@ -29,6 +29,7 @@ uint8_t ds3231_write(uint8_t data);
 uint8_t ds3231_read_ack(void);
 uint8_t ds3231_read_nack(void);
 void ds3231_read_time(ds3231_time_t *time);
+uint32_t ds3231_read_time_ms(void);
 void ds3231_set_time(const ds3231_time_t *time);
 void ds3231_print_time(const ds3231_time_t *time);
 uint8_t dec_to_bcd(uint8_t dec);

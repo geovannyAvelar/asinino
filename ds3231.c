@@ -15,7 +15,8 @@ void ds3231_init(void)
 // Wait for TWI interrupt flag to be set
 void ds3231_wait(void)
 {
-  while (!(TWCR & (1 << TWINT))) {
+  while (!(TWCR & (1 << TWINT)))
+  {
     _delay_ms(100);
   }
 }
@@ -84,6 +85,13 @@ void ds3231_read_time(ds3231_time_t *time)
   time->day_of_month = bcd_to_dec(time->day_of_month);
   time->month = bcd_to_dec(time->month & 0x7F);
   time->year = bcd_to_dec(time->year);
+}
+
+uint32_t ds3231_read_time_ms(void)
+{
+  ds3231_time_t time;
+  ds3231_read_time(&time);
+  return (uint32_t)(time.hour * 3600000 + time.min * 60000 + time.sec * 1000);
 }
 
 void ds3231_set_time(const ds3231_time_t *time)

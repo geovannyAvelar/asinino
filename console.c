@@ -53,6 +53,27 @@ void console_init(void)
       }
     }
 
+    if (strcmp(command, "uptime") == 0)
+    {
+      uint32_t uptime = mcu_get_uptime_ms();
+
+      uint32_t seconds = uptime / 1000;
+      uint32_t days = seconds / 86400;
+      uint32_t hours = (seconds % 86400) / 3600;
+      uint32_t minutes = (seconds % 3600) / 60;
+      uint32_t secs = seconds % 60;
+
+      uart_print("Uptime: ");
+      uart_print_int(days);
+      uart_print("d ");
+      uart_print_int(hours);
+      uart_print("h ");
+      uart_print_int(minutes);
+      uart_print("m ");
+      uart_print_int(secs);
+      uart_print("s\n");
+    }
+
     if (strcmp(command, "dumppt") == 0)
     {
       dump_page_table();
@@ -60,10 +81,7 @@ void console_init(void)
 
     if (strcmp(command, "date") == 0)
     {
-      ds3231_time_t* current_time = (ds3231_time_t*)get_page();
-      ds3231_read_time(current_time);
-      ds3231_print_time(current_time);
-      free_page(current_time);
+      print_date();
     }
 
     if (strcmp(command, "setdate") == 0)
@@ -113,4 +131,12 @@ uint8_t parse_command_args(char *input, char *args[7])
   }
 
   return count;
+}
+
+void print_date(void)
+{
+  ds3231_time_t* current_time = (ds3231_time_t*)get_page();
+  ds3231_read_time(current_time);
+  ds3231_print_time(current_time);
+  free_page(current_time);
 }

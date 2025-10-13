@@ -1,4 +1,5 @@
 #include "mem.h"
+#include "mcu.h"
 #include "uart.h"
 #include "log.h"
 #include "ds3231.h"
@@ -13,6 +14,7 @@ int main(void)
 {
   uart_init(UART_BAUD_RATE);
   ds3231_init();
+  set_startup_time();
 
   banner();
 
