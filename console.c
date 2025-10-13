@@ -23,7 +23,8 @@ void console_init(void)
 
     char *command = args[0];
 
-    if (strcmp(command, "clear") == 0)
+    uint8_t is_clear_command = (input[0] == 12 && input[1] == '\0');
+    if (is_clear_command || strcmp(command, "clear") == 0 || strcmp(command, "cls") == 0)
     {
       uart_print(CLEAR_CONSOLE);
     }
