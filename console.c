@@ -5,7 +5,7 @@
 
 void console_init(void)
 {
-  uart_print("Asinino v0.0.1!\r\n");
+  uart_print("Console initialized\r\n");
 
   while (1)
   {

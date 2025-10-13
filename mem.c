@@ -14,6 +14,12 @@ void meminit(void)
     entry->addr = (void *)(_PAGE_TABLE_END + 1) + (count * _PAGE_SIZE);
     count++;
   }
+
+  uart_print_int(count - 1);
+  uart_print(" pages of ");
+  uart_print_int(_PAGE_SIZE);
+  uart_print(" bytes initialized.\r\n");
+  uart_print("Memory initialized successfully!\r\n");
 }
 
 void *get_page(void)
