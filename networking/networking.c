@@ -1,8 +1,9 @@
 #include "networking.h"
 #include "../uart.h"
+#include "../log.h"
 
 void networking_init(void) {
-  uart_print("Initializing networking...\r\n");
+  info("Initializing networking...");
 
   uint8_t mac_address[6] = {0xDE, 0xAD, 0xBE, 0xEF, 0x00, 0x01};
   uint8_t ip_address[4] = {192, 168, 15, 100};
@@ -39,5 +40,5 @@ void networking_init(void) {
 
   w5100_init(mac_address, ip_address, gateway_address, subnet_mask);
 
-  uart_print("Networking initialized.\r\n");
+  info("Networking initialized.");
 }

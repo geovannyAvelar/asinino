@@ -1,9 +1,10 @@
 #include "mem.h"
 #include "uart.h"
+#include "log.h"
 
 void meminit(void)
 {
-  uart_print("Initializing memory...\r\n");
+  info("Initializing memory manager...");
 
   void *page_table_start = (void *)_PAGE_TABLE_START;
   unsigned int count = 1;
@@ -15,11 +16,7 @@ void meminit(void)
     count++;
   }
 
-  uart_print_int(count - 1);
-  uart_print(" pages of ");
-  uart_print_int(_PAGE_SIZE);
-  uart_print(" bytes initialized.\r\n");
-  uart_print("Memory initialized successfully!\r\n");
+  info("Memory manager initialized.");
 }
 
 void *get_page(void)

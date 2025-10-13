@@ -9,7 +9,7 @@
 #define DS3231_ADDR_W 0xD0 // (0x68 << 1) | 0
 #define DS3231_ADDR_R 0xD1 // (0x68 << 1) | 1
 
-typedef struct
+typedef struct ds3231_time_t
 {
   uint8_t sec;
   uint8_t min;

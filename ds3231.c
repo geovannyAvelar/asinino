@@ -116,7 +116,6 @@ void ds3231_print_time(const ds3231_time_t *time)
   uart_print_int(time->min);
   uart_print(":");
   uart_print_int(time->sec);
-  uart_print("\r\n");
 }
 
 uint8_t dec_to_bcd(uint8_t dec)

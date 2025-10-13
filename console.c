@@ -4,10 +4,11 @@
 #include "mcu.h"
 #include "uart.h"
 #include "ds3231.h"
+#include "log.h"
 
 void console_init(void)
 {
-  uart_print("Console initialized\r\n");
+  info("Console initialized");
 
   while (1)
   {
@@ -27,7 +28,7 @@ void console_init(void)
 
     if (strcmp(command, "restart") == 0)
     {
-      uart_print("Restarting...\r\n\n\n");
+      warn("Restarting...");
       mcu_restart();
     }
 
