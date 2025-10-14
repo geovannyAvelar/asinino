@@ -6,13 +6,13 @@ void meminit(void)
 {
   info("Initializing memory manager...");
 
-  void *page_table_start = (void *)_PAGE_TABLE_START;
+  void *page_table = (void *)_PAGE_TABLE_START;
   unsigned int count = 1;
-  for (page_table_start; page_table_start < (void *)_PAGE_TABLE_END; page_table_start += sizeof(struct pte))
+  for (page_table; page_table < (void *)_STACK_GUARD; page_table += sizeof(struct pte))
   {
-    struct pte *entry = (struct pte *)page_table_start;
+    struct pte *entry = (struct pte *)page_table;
     entry->used = 0;
-    entry->addr = (void *)(_PAGE_TABLE_END + 1) + (count * _PAGE_SIZE);
+    entry->addr = (void *)(_PHYS_MEM_START) + (count * _PAGE_SIZE);
     count++;
   }
 
@@ -22,7 +22,7 @@ void meminit(void)
 void *get_page(void)
 {
   void *page_table_start = (void *)_PAGE_TABLE_START;
-  for (page_table_start; page_table_start < (void *)_PAGE_TABLE_END; page_table_start += sizeof(struct pte))
+  for (page_table_start; page_table_start < (void *)_STACK_GUARD; page_table_start += sizeof(struct pte))
   {
     struct pte *entry = (struct pte *)page_table_start;
 
@@ -39,7 +39,7 @@ void *get_page(void)
 void free_page(void *ptr)
 {
   void *page_table_start = (void *)_PAGE_TABLE_START;
-  for (page_table_start; page_table_start < (void *)_PAGE_TABLE_END; page_table_start += sizeof(struct pte))
+  for (page_table_start; page_table_start < (void *)_STACK_GUARD; page_table_start += sizeof(struct pte))
   {
     struct pte *entry = (struct pte *)page_table_start;
     if (entry->addr == ptr)
@@ -71,7 +71,7 @@ void dump_page_table(void)
   uart_print("Page  Start     End      Used\r\n");
 
   unsigned int c = 0;
-  for (void *page_table_start = (void *)_PAGE_TABLE_START; page_table_start < (void *)_PAGE_TABLE_END; page_table_start += sizeof(struct pte))
+  for (void *page_table_start = (void *)_PAGE_TABLE_START; page_table_start < (void *)_STACK_GUARD; page_table_start += sizeof(struct pte))
   {
     struct pte *entry = (struct pte *)page_table_start;
     uart_print_int(c++);
