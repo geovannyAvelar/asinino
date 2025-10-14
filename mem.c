@@ -10,9 +10,16 @@ void meminit(void)
   unsigned int count = 1;
   for (page_table; page_table < (void *)_STACK_GUARD; page_table += sizeof(struct pte))
   {
+    void *start_addr = (void *)(_PHYS_MEM_START + 512) + (count * _PAGE_SIZE);
+
+    if ((unsigned int)start_addr + _PAGE_SIZE > _PAGE_TABLE_START)
+    {
+      break;
+    }
+
     struct pte *entry = (struct pte *)page_table;
     entry->used = 0;
-    entry->addr = (void *)(_PHYS_MEM_START) + (count * _PAGE_SIZE);
+    entry->addr = start_addr;
     count++;
   }
 

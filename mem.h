@@ -8,7 +8,7 @@
 #define _STACK_SIZE       128
 #define _STACK_GUARD      _PHYS_MEM_END - _STACK_SIZE
 #define _PAGE_SIZE        128
-#define _PAGE_TABLE_SIZE  256
+#define _PAGE_TABLE_SIZE  64
 #define _PAGE_TABLE_START _STACK_GUARD - _PAGE_TABLE_SIZE
 
 struct __attribute__((packed, aligned(1))) pte {
