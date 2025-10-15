@@ -1,7 +1,6 @@
 #ifndef CONSOLE_H
 #define CONSOLE_H
 
-#include "uart.h"
 #include <stdint.h>
 
 #define CLEAR_CONSOLE "\033[2J\033[H"

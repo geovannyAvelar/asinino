@@ -1,8 +1,8 @@
 #include "console.h"
+#include "uart.h"
 #include "asi_string.h"
 #include "mem.h"
 #include "mcu.h"
-#include "uart.h"
 #include "ds3231.h"
 #include "log.h"
 #include <stdlib.h>
