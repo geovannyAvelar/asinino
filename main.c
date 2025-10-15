@@ -4,7 +4,6 @@
 #include "log.h"
 #include "ds3231.h"
 #include "console.h"
-#include "spi.h"
 #include "networking/networking.h"
 #include "fs/diskio.h"
 
