@@ -6,13 +6,10 @@
 void ds3231_init(void)
 {
   TWSR = 0x00;
-  // Set bit rate register (see datasheet for formula)
   TWBR = (F_CPU / SCL_CLOCK - 16) / 2;
-  // Enable TWI
   TWCR = (1 << TWEN);
 }
 
-// Wait for TWI interrupt flag to be set
 void ds3231_wait(void)
 {
   while (!(TWCR & (1 << TWINT)))
@@ -21,29 +18,25 @@ void ds3231_wait(void)
   }
 }
 
-// Send START condition
 void ds3231_start(void)
 {
   TWCR = (1 << TWINT) | (1 << TWSTA) | (1 << TWEN);
   ds3231_wait();
 }
 
-// Send STOP condition
 void ds3231_stop(void)
 {
   TWCR = (1 << TWINT) | (1 << TWSTO) | (1 << TWEN);
 }
 
-// Transmit a byte
 uint8_t ds3231_write(uint8_t data)
 {
   TWDR = data;
   TWCR = (1 << TWINT) | (1 << TWEN);
   ds3231_wait();
-  return (TWSR & 0xF8); // Return status code
+  return (TWSR & 0xF8);
 }
 
-// Receive a byte with ACK (acknowledge more data)
 uint8_t ds3231_read_ack(void)
 {
   TWCR = (1 << TWINT) | (1 << TWEN) | (1 << TWEA);
@@ -51,7 +44,6 @@ uint8_t ds3231_read_ack(void)
   return TWDR;
 }
 
-// Receive a byte with NACK (no more data)
 uint8_t ds3231_read_nack(void)
 {
   TWCR = (1 << TWINT) | (1 << TWEN);

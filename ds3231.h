@@ -6,8 +6,8 @@
 #define F_CPU 16000000UL   // Assuming 16MHz clock
 #define SCL_CLOCK 100000UL // 100kHz I2C clock
 
-#define DS3231_ADDR_W 0xD0 // (0x68 << 1) | 0
-#define DS3231_ADDR_R 0xD1 // (0x68 << 1) | 1
+#define DS3231_ADDR_W 0xD0
+#define DS3231_ADDR_R 0xD1
 
 
 typedef struct __attribute__((packed, aligned(1))) ds3231_time_t
