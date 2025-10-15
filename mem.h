@@ -10,7 +10,7 @@
 #define PAGE_SIZE        128
 #define PAGE_COUNT       (((PHYS_MEM_END - STACK_SIZE - PHYS_MEM_START) / PAGE_SIZE) - 1)
 #define PAGE_TABLE_SIZE  (PAGE_COUNT * sizeof(struct pte))
-#define PAGE_TABLE_START (PHYS_MEM_START + 1)
+#define PAGE_TABLE_START (PHYS_MEM_START + 2)
 #define PAGE_TABLE_END   (PAGE_TABLE_START + PAGE_TABLE_SIZE)
 
 struct __attribute__((packed, aligned(1))) pte {
