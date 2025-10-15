@@ -1,7 +1,7 @@
 #include "mcu.h"
 #include "ds3231.h"
 
-static uint32_t startup_time_ms = 0;
+volatile uint32_t startup_time_ms;
 
 void mcu_restart(void)
 {
