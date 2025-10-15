@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 
-#define PHYS_MEM_START   (0x0100 + 512)
+#define PHYS_MEM_START   (0x0100 + 512) // 512 offset for runtime libs
 #define PHYS_MEM_END     0x08FF
 #define STACK_SIZE       128
 #define STACK_GUARD      (PHYS_MEM_END - STACK_SIZE)
