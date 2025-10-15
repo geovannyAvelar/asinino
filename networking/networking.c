@@ -5,6 +5,8 @@
 void networking_init(void) {
   info("Initializing networking...");
 
+  networking_spi_init();
+
   uint8_t mac_address[6] = {0xDE, 0xAD, 0xBE, 0xEF, 0x00, 0x01};
   uint8_t ip_address[4] = {192, 168, 15, 100};
   uint8_t gateway_address[4] = {192, 168, 15, 1};

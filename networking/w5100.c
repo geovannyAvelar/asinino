@@ -1,12 +1,15 @@
 #include "w5100.h"
 
+#include <util/delay.h>
+#include "../spi.h"
+
 void w5100_write(uint16_t addr, uint8_t data)
 {
   W5100_SELECT();
-  spi_transfer(0xF0); // Write command
-  spi_transfer(addr >> 8);
-  spi_transfer(addr & 0xFF);
-  spi_transfer(data);
+  networking_spi_transfer(0xF0); // Write command
+  networking_spi_transfer(addr >> 8);
+  networking_spi_transfer(addr & 0xFF);
+  networking_spi_transfer(data);
   W5100_DESELECT();
 }
 
@@ -14,10 +17,10 @@ uint8_t w5100_read(uint16_t addr)
 {
   uint8_t data;
   W5100_SELECT();
-  spi_transfer(0x0F); // Read command
-  spi_transfer(addr >> 8);
-  spi_transfer(addr & 0xFF);
-  data = spi_transfer(0x00);
+  networking_spi_transfer(0x0F); // Read command
+  networking_spi_transfer(addr >> 8);
+  networking_spi_transfer(addr & 0xFF);
+  data = networking_spi_transfer(0x00);
   W5100_DESELECT();
   return data;
 }

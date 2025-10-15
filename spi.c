@@ -2,7 +2,7 @@
 #include "uart.h"
 #include "log.h"
 
-void spi_init(void)
+void networking_spi_init(void)
 {
   info("Initializing SPI...");
 
@@ -14,7 +14,7 @@ void spi_init(void)
   info("SPI Initialized!");
 }
 
-uint8_t spi_transfer(uint8_t data)
+uint8_t networking_spi_transfer(uint8_t data)
 {
   SPDR = data;
   while (!(SPSR & (1 << SPIF)))

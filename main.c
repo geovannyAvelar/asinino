@@ -25,7 +25,6 @@ int main(void)
     error("Disk initialization failed");
   }
 
-  spi_init();
   networking_init();
 
   console_init();
