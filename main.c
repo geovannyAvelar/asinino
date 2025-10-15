@@ -1,4 +1,3 @@
-#include "mem.h"
 #include "mcu.h"
 #include "uart.h"
 #include "log.h"
@@ -16,8 +15,6 @@ int main(void)
   set_startup_time();
 
   banner();
-
-  meminit();
 
   if (disk_initialize(0) != RES_OK)
   {

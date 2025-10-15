@@ -12,7 +12,6 @@ LDFLAGS = -Wl,-gc-sections -Wl,-relax -mmcu=$(MCU)
 TARGET = main
 SRC = \
 	asi_string.c \
-	mem.c \
 	uart.c \
 	log.c \
 	ds3231.c \
