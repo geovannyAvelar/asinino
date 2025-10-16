@@ -12,6 +12,9 @@ void networking_init(void) {
   uint8_t gateway_address[4] = {192, 168, 15, 1};
   uint8_t subnet_mask[4] = {255, 255, 255, 0};
 
+  w5100_init(mac_address, ip_address, gateway_address, subnet_mask);
+
+  info("Networking initialized.");
   uart_print("MAC Address: ");
   for (int i = 0; i < 6; i++) {
     uart_print_hex_f(mac_address[i]);
@@ -39,8 +42,4 @@ void networking_init(void) {
     if (i < 3) uart_print(".");
   }
   uart_print("\r\n");
-
-  w5100_init(mac_address, ip_address, gateway_address, subnet_mask);
-
-  info("Networking initialized.");
 }
