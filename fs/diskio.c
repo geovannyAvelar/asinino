@@ -15,6 +15,8 @@
 #include <util/delay.h>
 #include <stdint.h>
 
+#include "../uart.h"
+
 static volatile DSTATUS Stat = STA_NOINIT; /* Disk status */
 static BYTE CardType;                      /* Card type flags */
 
@@ -58,10 +60,22 @@ DSTATUS disk_initialize(BYTE pdrv)
 
   // 3. COMMAND SEQUENCE
   // CMD0: GO_IDLE_STATE
-  if (send_cmd(CMD0, 0) != 1)
-  { // R1 should be 0x01 (Idle State)
-    error("SD card CMD0 failed.");
-    return STA_NOINIT;
+  {
+    BYTE resp = 0xFF;
+    UINT timeout = 200; // ~2s (200 * 10ms)
+    do {
+      resp = send_cmd(CMD0, 0);
+      if (resp == 0x01) break; // R1: Idle State
+      _delay_ms(10);
+    } while (--timeout);
+
+    if (resp != 0x01)
+    {
+      error("SD card CMD0 failed (no idle response).");
+      return STA_NOINIT;
+    } else {
+      info("SD card entered Idle State.");
+    }
   }
 
   // CMD8: SEND_IF_COND (Check for SDv2/SDHC)
@@ -84,7 +98,6 @@ DSTATUS disk_initialize(BYTE pdrv)
     {
       for (n = 0; n < 4; n++)
         ocr[n] = spi_sd_card_transfer(0xFF);
-      // This is where you would store CardType (SDHC vs SDSC)
     }
   }
   else
@@ -103,8 +116,10 @@ DSTATUS disk_initialize(BYTE pdrv)
 
     // If timeout, return fail
     if (n == 0)
+    {
       error("SD card initialization failed.");
       return STA_NOINIT;
+    }
   }
 
   // Deselect the card after successful initialization

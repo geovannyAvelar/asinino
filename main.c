@@ -19,6 +19,8 @@ int main(void)
   if (disk_initialize(0) != RES_OK)
   {
     error("Disk initialization failed");
+  } else {
+    info("Disk initialized successfully");
   }
 
   networking_init();
