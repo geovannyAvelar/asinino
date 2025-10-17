@@ -16,13 +16,6 @@ int main(void)
 
   banner();
 
-  if (disk_initialize(0) != RES_OK)
-  {
-    error("Disk initialization failed");
-  } else {
-    info("Disk initialized successfully");
-  }
-
   networking_init();
 
   console_init();
